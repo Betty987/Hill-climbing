@@ -1,3 +1,4 @@
+# Hill Climbing Algorithm to Find Roots of a Quadratic Function
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -36,40 +37,50 @@ def hill_climbing(start, step_size, max_iterations, tolerance, a, b, c):
     
     return current_x, path
 
-# Parameters
-a, b, c = 3, -5, 2  # Coefficients 
-start_points = [-5, 5]  # Start points 
+a, b, c = -1, 4, 2 # Coefficients 
 step_size = 0.1
 max_iterations = 1000
 tolerance = 1e-6
 
-# Find roots
-roots = []
-paths = []
-for start in start_points:
-    root, path = hill_climbing(start, step_size, max_iterations, tolerance, a, b, c)
-    roots.append(root)
-    paths.append(path)
+# Check discriminant
+discriminant = b**2 - 4 * a * c
+if discriminant < 0:
+    print(f"Discriminant = {discriminant:.2f} < 0: No real roots exist.")
+    roots = []
+    paths = []
+else:
+    # Use start points based on vertex to target roots
+    vertex_x = -b / (2 * a)  # Vertex at x = -b/(2a)
+    start_points = [vertex_x - 1, vertex_x + 1]  # Start either side of vertex
+    
+    # Find roots
+    roots = []
+    paths = []
+    for start in start_points:
+        root, path = hill_climbing(start, step_size, max_iterations, tolerance, a, b, c)
+        roots.append(root)
+        paths.append(path)
 
-# Plotting
-x = np.linspace(-5, 1, 400) 
-y = quadratic(x, a, b, c)
+    # Plotting
+    x = np.linspace(vertex_x - 2, vertex_x + 2, 400)  # Center plot around vertex
+    y = quadratic(x, a, b, c)
 
-plt.figure(figsize=(10, 6))
-plt.plot(x, y, 'b-', label=f'f(x) = {a}x² + {b}x + {c}')  # Plot quadratic
-plt.axhline(0, color='black', linestyle='-', alpha=0.3)
-plt.axvline(0, color='black', linestyle='-', alpha=0.3)
+    plt.figure(figsize=(10, 6))
+    plt.plot(x, y, 'b-', label=f'f(x) = {a}x² + {b}x + {c}')  # Plot quadratic
+    plt.axhline(0, color='black', linestyle='-', alpha=0.3)
+    plt.axvline(0, color='black', linestyle='-', alpha=0.3)
 
-# Plot paths with valid format strings
-for i, (root, path) in enumerate(zip(roots, paths)):
-    path_y = [quadratic(x, a, b, c) for x in path]
-    color = 'r-' if i == 0 else 'g-'  # Red for first path, green for second
-    plt.plot(path, path_y, color, marker='o', label=f'Path from x={start_points[i]:.1f}', alpha=0.6)
-    plt.plot(root, quadratic(root, a, b, c), marker='*', color=color[0], markersize=15, label=f'Root ≈ {root:.2f}')
+    # Plot paths if roots were found
+    for i, (root, path) in enumerate(zip(roots, paths)):
+        path_y = [quadratic(x, a, b, c) for x in path]
+        color = 'r-' if i == 0 else 'g-'  # Red for first path, green for second
+        plt.plot(path, path_y, color, marker='o', label=f'Path from x={start_points[i]:.1f}', alpha=0.6)
+        plt.plot(root, quadratic(root, a, b, c), marker='*', color=color[0], markersize=15, label=f'Root ≈ {root:.2f}')
 
-plt.title(f'Hill Climbing to Find Roots of {a}x² + {b}x + {c}')
-plt.xlabel('x')
-plt.ylabel('f(x)')
-plt.grid(True)
-plt.legend()
-plt.savefig('hill_climbing_quadratic_generic.png')
+    plt.title(f'Hill Climbing to Find Roots of {a}x² + {b}x + {c}')
+    plt.xlabel('x')
+    plt.ylabel('f(x)')
+    plt.grid(True)
+    plt.legend()
+    plt.savefig('hill_climbing_quadratic_with_discriminant.png')
+    plt.show()
