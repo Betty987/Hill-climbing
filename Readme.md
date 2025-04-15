@@ -9,7 +9,6 @@ This repository contains a Python script that uses a hill climbing algorithm to 
 
 ## Installation
  ```bash
-    Clone the repository
     git clone https://github.com/Betty987/Hill-climbing.git
     cd Hill-climbing
    ```
@@ -18,4 +17,4 @@ This repository contains a Python script that uses a hill climbing algorithm to 
 ![index Preview](./hill_climbing_quadratic_with_discriminant.png)  
 
 ## Report
-![index Preview](./Hillclimbing.pdf)  
+![PDF link](./Hillclimbing.pdf)  
