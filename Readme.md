@@ -16,3 +16,6 @@ This repository contains a Python script that uses a hill climbing algorithm to 
 
 ## Sample plot 
 ![index Preview](./hill_climbing_quadratic_with_discriminant.png)  
+
+## Report
+![index Preview](./Hillclimbing.pdf)  
